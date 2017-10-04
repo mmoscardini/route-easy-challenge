@@ -24,27 +24,40 @@ router.post ('/setDeliveries', (req, res, next)=>{
     //Conferir se o mesmo endereço ja foi cadastrado
     deliveryModel.getDeliveryByAddress(newDelivery.endereço[0].logradouro,newDelivery.endereço[0].numero, newDelivery.endereço[0].cidade , (err, delivery)=>{
         //caso a rua numero e ciadde sejam o mesmo retornar que o endereço já está cadastrado
-        if (newDelivery.endereço[0].logradouro == delivery.endereço[0].logradouro && 
-            newDelivery.endereço[0].numero == delivery.endereço[0].numero &&
-            newDelivery.endereço[0].cidade == delivery.endereço[0].cidade){
-            return res.json({success: false, msg: 'Este endereço já está cadastrado. Por favor aguarde a retrada.'})
+        if (err) 
+            throw err;
+        
+        if (delivery){
+            if (newDelivery.endereço[0].logradouro == delivery.endereço[0].logradouro && 
+                newDelivery.endereço[0].numero == delivery.endereço[0].numero &&
+                newDelivery.endereço[0].cidade == delivery.endereço[0].cidade) {
+                    return res.json({success: false, msg: 'Endereço já cadastrado. Aguarde a retirada.'})            
+            }            
+        } else {
+            //Salvar novo delivery na base de dados
+            deliveryModel.saveDelivery(newDelivery, (err, delivery)=>{
+                if (err) {
+                    console.log (err);            
+                    return res.json({success: false, msg: 'Falha ao cadastrar delivery. Por favor tente novamente.'})            
+                }
+                else if (delivery)
+                    return res.json({success: true, msg: 'Delivery cadastrado com sucesso'})        
+            })
         }
     });
-
-    //Salvar novo delivery na base de dados
-    deliveryModel.saveDelivery(newDelivery, (err, delivery)=>{
-        if (err) {
-            console.log (err);            
-            return res.json({success: false, msg: 'Falha ao cadastrar delivery. Por favor tente novamente.'})            
-        }
-        else if (delivery)
-            return res.json({success: true, msg: 'Delivery cadastrado com sucesso'})        
-    })
-
 });
 
 router.get ('/getDeliveries', (req, res, next)=>{
+    deliveryModel.getAllDeliveries((err, deliveries)=>{
+        if (err) throw err;
         
+        if (deliveries){
+            deliveries.forEach(function(e) {
+                console.log (e);
+            }, this);
+            return res.json({success: true, msg: 'Foram encontrados ' + deliveries.length + ' endereços'})                    
+        }
+    })
 });
 
 //Rota para deletar TODOS os registros da coleção
