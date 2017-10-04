@@ -1,0 +1,24 @@
+{
+  "name": "route_easy",
+  "version": "1.0.0",
+  "description": "Este é um desafio proposto pela route easy",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MEAN",
+    "mongoose",
+    "geolocalização",
+    "geocode",
+    "leaflet"
+  ],
+  "dependencies": {
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "mongoose": "*"
+  },
+  "author": "Matheus Moscardini",
+  "license": "MIT"
+}
