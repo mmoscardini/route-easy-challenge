@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {RequestsService} from '../../services/requests.service';
 import {IntegrationService} from '../../services/integration.service';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-table',
@@ -14,7 +16,8 @@ export class TableComponent implements OnInit {
 
   constructor(
     private integrationService: IntegrationService,
-    private requests: RequestsService
+    private requests: RequestsService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
