@@ -74,5 +74,3 @@ export class MapComponent implements OnInit {
     this.addMarkers();
   }
 }
-
-
