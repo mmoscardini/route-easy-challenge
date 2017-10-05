@@ -57,10 +57,10 @@ export class FormComponent implements OnInit {
             ]
           }
           console.log (this.newDelivery);
-          return this.flashMessage.show('Enderço encontrado na cidade: ' + data.results[0].address_components[3].long_name +', ' + data.results[0].address_components[5].short_name, {cssClass: 'alert-info', timeout: 4000 })          
+          return this.flashMessage.show('Enderço encontrado na cidade: ' + data.results[0].address_components[3].long_name +', ' + data.results[0].address_components[5].short_name, {cssClass: 'alert-info', timeout: 5000 })          
           
           } else{
-            return this.flashMessage.show('Enderço não encontrado', {cssClass: 'alert-danger', timeout: 4000 })        
+            return this.flashMessage.show('Enderço não encontrado', {cssClass: 'alert-danger', timeout: 5000 })        
           }
         }
       })
@@ -68,28 +68,40 @@ export class FormComponent implements OnInit {
   }
 
   OnRegisterSubmit(){
-    
-    this.validateFields();
+    //Validar se os campos foram preenchidos corretamente
+    if(this.validateFields() == false){
+      return false;
+    }
    
-    //ESTA OCORRENDO UM ERRO AQUI! DAR CONTINUIDADE AMANHA!
     this.requests.newDelivery(this.newDelivery).subscribe(data =>{
+      console.log (data);
       if(data.success){
-        return this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout: 4000 });
+        return this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout: 5000 });
       }
       else {
-        return this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 4000 });          
+        return this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 5000 });          
       }
+    }, err => {
+      console.log (err);
     })
   }
 
   //Validação se os campos foram preenchidos corretamente
   validateFields(){
     if (this.endereco == undefined || this.nome == undefined || this.peso == undefined){
-      return this.flashMessage.show('Preencher todos os campos', {cssClass: 'alert-danger', timeout: 4000 });                
+      this.flashMessage.show('Preencher todos os campos', {cssClass: 'alert-warning', timeout: 5000 });                
+      return false;
     }
 
     if (this.newDelivery == null || this.newDelivery == undefined){
-      return this.flashMessage.show('Clicar em buscar endereço antes de cadastrar', {cssClass: 'alert-warning', timeout: 4000 })          
+      this.flashMessage.show('Clicar em buscar endereço antes de cadastrar', {cssClass: 'alert-warning', timeout: 5000 })          
+      return false;
     }
+  }
+
+  deleteDB(){
+    this.requests.deleteAllDeliveries().subscribe(data =>{
+      return this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 5000 });      
+    })
   }
 }

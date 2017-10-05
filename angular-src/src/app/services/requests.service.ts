@@ -12,7 +12,7 @@ export class RequestsService {
   newDelivery(newDelivery){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost3000/deliveries/setDeliveries',newDelivery, {headers:headers}).
+    return this.http.post('http://localhost:3000/deliveries/setDeliveries',newDelivery, {headers:headers}).
     map(res => res.json());
   }
 
@@ -24,4 +24,10 @@ export class RequestsService {
     map(res => res.json());
   }
 
+  deleteAllDeliveries(){
+    return this.http.delete('http://localhost:3000/deliveries/deleteDeliveries').
+    map(res => res.json());
+  }
+
+  
 }
