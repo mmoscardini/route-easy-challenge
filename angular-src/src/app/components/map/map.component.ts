@@ -19,8 +19,8 @@ export class MapComponent implements OnInit {
       layers: [
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
       ],
-      zoom: 4,
-      center: L.latLng([ -15.4647, -47.5547 ])
+      zoom: 13,
+      center: L.latLng([ -23.533773, 	-46.625290 ])
     };
   }
 
