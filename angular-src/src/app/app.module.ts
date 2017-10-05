@@ -5,6 +5,8 @@ import {HttpModule} from '@angular/http';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import {HttpClientModule} from '@angular/common/http';
 import { FlashMessagesModule } from 'angular2-flash-messages';
+import { RouterModule, Routes} from '@angular/router';
+
 
 import { AppComponent } from './app.component';
 import { FormComponent } from './components/form/form.component';
@@ -13,6 +15,11 @@ import { TableComponent } from './components/table/table.component';
 
 import {RequestsService} from './services/requests.service';
 import {IntegrationService} from './services/integration.service';
+import {TaskResolverService} from './services/task-resolver.service';
+
+const appRoutes: Routes = [
+  {path: '', component: MapComponent,  resolve: { data: TaskResolverService }}
+]
 
 @NgModule({
   declarations: [
@@ -27,9 +34,10 @@ import {IntegrationService} from './services/integration.service';
     HttpModule,
     LeafletModule.forRoot(),
     HttpClientModule,
-    FlashMessagesModule
+    FlashMessagesModule,
+    RouterModule.forRoot(appRoutes)
   ],
-  providers: [RequestsService, IntegrationService],
+  providers: [RequestsService, IntegrationService, TaskResolverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
