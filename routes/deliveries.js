@@ -6,31 +6,31 @@ router.post ('/setDeliveries', (req, res, next)=>{
     let newDelivery = new deliveryModel ({
         nome: req.body.nome,
         peso: req.body.peso,
-        endereço: [{
-            logradouro: req.body.endereço[0].logradouro,
-            numero: req.body.endereço[0].numero,
-            bairro: req.body.endereço[0].bairro,
-            complemento: req.body.endereço[0].complemento,
-            cidade: req.body.endereço[0].cidade,
-            estado: req.body.endereço[0].estado,
-            pais: req.body.endereço[0].pais,
-            geolocalização: [{
-                lat: req.body.endereço[0].geolocalização[0].lat,
-                long: req.body.endereço[0].geolocalização[0].long
+        endereco: [{
+            logradouro: req.body.endereco[0].logradouro,
+            numero: req.body.endereco[0].numero,
+            bairro: req.body.endereco[0].bairro,
+            complemento: req.body.endereco[0].complemento,
+            cidade: req.body.endereco[0].cidade,
+            estado: req.body.endereco[0].estado,
+            pais: req.body.endereco[0].pais,
+            geolocalizacão: [{
+                lat: req.body.endereco[0].geolocalizacão[0].lat,
+                long: req.body.endereco[0].geolocalizacão[0].long
             }]
         }]
     });
 
-    //Conferir se o mesmo endereço ja foi cadastrado
-    deliveryModel.getDeliveryByAddress(newDelivery.endereço[0].logradouro,newDelivery.endereço[0].numero, newDelivery.endereço[0].cidade , (err, delivery)=>{
-        //caso a rua numero e ciadde sejam o mesmo retornar que o endereço já está cadastrado
+    //Conferir se o mesmo endereco ja foi cadastrado
+    deliveryModel.getDeliveryByAddress(newDelivery.endereco[0].logradouro,newDelivery.endereco[0].numero, newDelivery.endereco[0].cidade , (err, delivery)=>{
+        //caso a rua numero e ciadde sejam o mesmo retornar que o endereco já está cadastrado
         if (err) 
             throw err;
         
         if (delivery){
-            if (newDelivery.endereço[0].logradouro == delivery.endereço[0].logradouro && 
-                newDelivery.endereço[0].numero == delivery.endereço[0].numero &&
-                newDelivery.endereço[0].cidade == delivery.endereço[0].cidade) {
+            if (newDelivery.endereco[0].logradouro == delivery.endereco[0].logradouro && 
+                newDelivery.endereco[0].numero == delivery.endereco[0].numero &&
+                newDelivery.endereco[0].cidade == delivery.endereco[0].cidade) {
                     return res.json({success: false, msg: 'Endereço já cadastrado. Aguarde a retirada.'})            
             }            
         } else {
@@ -61,7 +61,7 @@ router.get ('/getDeliveries', (req, res, next)=>{
     })
 });
 
-//Rota para deletar TODOS os registros da coleção
+//Rota para deletar TODOS os registros da colecão
 router.delete ('/deleteDeliveries', (req, res, next)=>{
     deliveryModel.remove({}, (err, data)=>{
         if (err)

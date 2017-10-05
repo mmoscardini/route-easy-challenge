@@ -16,6 +16,7 @@ export class MapComponent implements OnInit {
   options: Object;
   map;
   customIcon;
+  markers = new L.LayerGroup();
   
   constructor(
     private requests: RequestsService,
@@ -25,7 +26,7 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     
-    //Inicia o mapa com posição central e zoom
+    //Inicia o mapa com posicão central e zoom
     this.map = L.map('mapid').setView([ -23.556345, 	-46.616355 ], 11);
   
     //Adiciona a primeira tileLayer com infos provenientes do mapbox
@@ -48,29 +49,28 @@ export class MapComponent implements OnInit {
 
     //Subscribe to the integration service to check for novoCadastro
     this.integrationService.novoCadastroSource.subscribe(data =>{
-      if (data){
-        this.addMarkers();
-        this.integrationService.novoCadastro(false);        
-      }
+      this.updateMakerkers();
     })
   }
 
-  //Função para adicionar marcadores
+  //Funcão para adicionar marcadores
   addMarkers(){
     //Request all saved deliveries
     this.requests.getAllDeliveries().subscribe(data=>{
       //Loop throw all keys in object
       for(var i =0; i < Object.keys(data).length; i++){
         //Create a marker at each location
-        const marker = L.marker([ data[i].endereço[0].geolocalização[0].lat, data[i].endereço[0].geolocalização[0].long ], {icon: this.customIcon}).addTo(this.map);        
+        const marker = L.marker([ data[i].endereco[0].geolocalizacão[0].lat, data[i].endereco[0].geolocalizacão[0].long ], {icon: this.customIcon});        
         marker.bindPopup('<p class="text-center"> <b>' + data[i].nome.toString() + '</b><br>' + data[i].peso.toString()+' Kg</p>').openPopup();
+        this.markers.addLayer(marker).addTo(this.map);
       }
     }, err =>{
       console.log (err);
     })
   }
 
-  showPopups(){
-
+  updateMakerkers(){
+    this.markers.clearLayers();    
+    this.addMarkers();
   }
 }

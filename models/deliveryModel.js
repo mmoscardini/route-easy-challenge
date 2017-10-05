@@ -9,7 +9,7 @@ const DeliverySchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    endereço: [{
+    endereco: [{
         logradouro: {type: String,required: true},
         numero: {type: Number,required: true},
         bairro: {type: String,required: true},
@@ -17,7 +17,7 @@ const DeliverySchema = mongoose.Schema({
         cidade: {type: String,required: true},
         estado: {type: String,required: true},
         pais: {type: String,required: true},
-        geolocalização: [{
+        geolocalizacão: [{
             lat: {type: Number,required: true},
             long: {type: Number,required: true}
         }]
@@ -31,7 +31,7 @@ module.exports.getDeliveryById = (id, callback)=>{
 }
 
 module.exports.getDeliveryByAddress = (logradouro,numero,cidade, callback)=>{
-    deliverySchema.findOne({"endereço.logradouro": logradouro, "endereço.numero": numero, "endereço.cidade":cidade}, callback);
+    deliverySchema.findOne({"endereco.logradouro": logradouro, "endereco.numero": numero, "endereco.cidade":cidade}, callback);
 }
 
 module.exports.saveDelivery = (data, callback)=>{

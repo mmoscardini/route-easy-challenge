@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class TableComponent implements OnInit {
 
   deliveries: Object;
-  objectKeys = Object.keys;
+  objectKeys;
 
   constructor(
     private integrationService: IntegrationService,
@@ -20,16 +20,22 @@ export class TableComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit():void {
+  ngOnInit() {
+    
 
-    console. log (this.route.snapshot.data);
+    this.requests.getAllDeliveries().subscribe(data=>{
+      this.deliveries = data;
+      this.objectKeys = Object.keys(this.deliveries);      
+    })
 
     this.integrationService.novoCadastroSource.subscribe(data =>{
       if (data){
         this.requests.getAllDeliveries().subscribe(data=>{
-          this.deliveries = data;
+          if (data){
+            this.deliveries = data;
+            this.objectKeys = Object.keys(this.deliveries);                  
+          }
         });
-        this.integrationService.novoCadastro(false);        
       }
     })
    }
