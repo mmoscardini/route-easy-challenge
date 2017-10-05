@@ -1,3 +1,27 @@
-<p>
-  table works!
-</p>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2 class="panel-title text-center">Lista de entregas</h2>
+  </div>
+</div>
+<div class="panel-body">
+  <table class="table table-striped table-bordered table-list">
+    <thead>
+      <tr>
+        <th class="text-center">Nome</th>
+        <th class="text-center">Peso</th>
+        <th class="text-center">Endereço</th>
+        <th class="text-center"><i class="glyphicon glyphicon-cog"></i></th>        
+      </tr> 
+    </thead>
+    <tbody>
+      <tr *ngFor="let k of objectKeys(deliveries)">
+          <td class="text-center">{{deliveries[k].nome}}</td>
+          <td class="text-center">{{deliveries[k].peso}}</td>
+          <td class="text-center">
+            <!-- <button class="btn btn-default text-center"><i class="glyphicon glyphicon-pencil"></i></button>-->
+            <button class="btn btn-danger text-center"><i class="glyphicon glyphicon-trash"></i></button>
+          </td> 
+      </tr> 
+    </tbody>
+  </table>
+</div>

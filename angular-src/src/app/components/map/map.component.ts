@@ -39,11 +39,14 @@ export class MapComponent implements OnInit {
     //definir icone customizado para markers
     this.customIcon = L.icon({
       iconUrl: '../../assets/boxicon2.png',
-      iconSize: [40, 40],
-      iconAnchor: [15, 15],
-      popupAnchor: [-3, -76]
+      iconSize: [30, 30],
+      iconAnchor: [5, 5],
+      popupAnchor: [10, 0]
     });
 
+    this.addMarkers();
+
+    //Subscribe to the integration service to check for novoCadastro
     this.integrationService.novoCadastroSource.subscribe(data =>{
       if (data){
         this.addMarkers();
@@ -59,10 +62,15 @@ export class MapComponent implements OnInit {
       //Loop throw all keys in object
       for(var i =0; i < Object.keys(data).length; i++){
         //Create a marker at each location
-        const layer = L.marker([ data[i].endereço[0].geolocalização[0].lat, data[i].endereço[0].geolocalização[0].long ], {icon: this.customIcon}).addTo(this.map);        
+        const marker = L.marker([ data[i].endereço[0].geolocalização[0].lat, data[i].endereço[0].geolocalização[0].long ], {icon: this.customIcon}).addTo(this.map);        
+        marker.bindPopup('<p class="text-center"> <b>' + data[i].nome.toString() + '</b><br>' + data[i].peso.toString()+' Kg</p>').openPopup();
       }
     }, err =>{
       console.log (err);
     })
+  }
+
+  showPopups(){
+
   }
 }
