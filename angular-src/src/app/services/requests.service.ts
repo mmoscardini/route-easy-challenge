@@ -16,6 +16,13 @@ export class RequestsService {
     map(res => res.json());
   }
 
+  getAllDeliveries(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/deliveries/getDeliveries', {headers: headers}).
+    map(res => res.json());
+  }
+
   checkAddress(address){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

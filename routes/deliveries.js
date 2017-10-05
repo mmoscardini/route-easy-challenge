@@ -52,10 +52,11 @@ router.get ('/getDeliveries', (req, res, next)=>{
         if (err) throw err;
         
         if (deliveries){
-            deliveries.forEach(function(e) {
-                console.log (e);
-            }, this);
-            return res.json({success: true, msg: 'Foram encontrados ' + deliveries.length + ' endereços'})                    
+            const allDeliverys ={}
+            for (var i=0; i< deliveries.length; i++){
+                allDeliverys[i] = deliveries[i];
+            }
+            return res.json(allDeliverys);
         }
     })
 });
