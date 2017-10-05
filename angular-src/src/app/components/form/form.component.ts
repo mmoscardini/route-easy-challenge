@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {RequestsService} from '../../services/requests.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
+import {IntegrationService} from '../../services/integration.service';
 
 
 @Component({
@@ -20,7 +21,9 @@ export class FormComponent implements OnInit {
   constructor(
     private requests: RequestsService,
     private flashMessage: FlashMessagesService,
-  ) { }
+    private integrationService: IntegrationService
+  ) { 
+  }
 
   ngOnInit() {
   }
@@ -103,6 +106,7 @@ export class FormComponent implements OnInit {
     this.requests.newDelivery(this.newDelivery).subscribe(data =>{
       //console.log (data);
       if(data.success){
+        this.integrationService.novoCadastro(true);
         return this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout: 5000 });
       }
       else {
@@ -128,6 +132,7 @@ export class FormComponent implements OnInit {
 
   deleteDB(){
     this.requests.deleteAllDeliveries().subscribe(data =>{
+      this.integrationService.novoCadastro(true);      
       return this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 5000 });      
     })
   }

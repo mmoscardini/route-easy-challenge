@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import {RequestsService} from '../../services/requests.service';
-import {FlashMessagesService} from 'angular2-flash-messages'
+import {FlashMessagesService} from 'angular2-flash-messages';
+import {IntegrationService} from '../../services/integration.service';
+import { Subscription }   from 'rxjs/Subscription';
+
 
 @Component({
   selector: 'app-map',
@@ -16,7 +19,8 @@ export class MapComponent implements OnInit {
   
   constructor(
     private requests: RequestsService,
-    private flashMessage: FlashMessagesService
+    private flashMessage: FlashMessagesService,
+    private integrationService: IntegrationService
   ) { }
 
   ngOnInit() {
@@ -40,7 +44,12 @@ export class MapComponent implements OnInit {
       popupAnchor: [-3, -76]
     });
 
-    this.addMarkers();
+    this.integrationService.novoCadastroSource.subscribe(data =>{
+      if (data){
+        this.addMarkers();
+        this.integrationService.novoCadastro(false);        
+      }
+    })
   }
 
   //Função para adicionar marcadores

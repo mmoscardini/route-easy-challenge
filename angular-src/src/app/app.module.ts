@@ -12,6 +12,7 @@ import { MapComponent } from './components/map/map.component';
 import { TableComponent } from './components/table/table.component';
 
 import {RequestsService} from './services/requests.service';
+import {IntegrationService} from './services/integration.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import {RequestsService} from './services/requests.service';
     HttpClientModule,
     FlashMessagesModule
   ],
-  providers: [RequestsService],
+  providers: [RequestsService, IntegrationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
