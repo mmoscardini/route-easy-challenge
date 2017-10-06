@@ -17,6 +17,9 @@ Desenvolver um aplicativo com o framework MEAN que utilize mongoose, google geoc
 * A tabela e o mapa devem atualizar de forma assincrona conforme alterações no banco de dados.
 
 ## Utilização:
+### Versão em produção
+* https://rout-easy-challenge.herokuapp.com/
+
 ### Requisitos:
 * NodeJs
 * MongoDb
