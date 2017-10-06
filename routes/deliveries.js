@@ -72,4 +72,27 @@ router.delete ('/deleteDeliveries', (req, res, next)=>{
     })
 });
 
+
+router.delete ('/deleteOneDelivery', (req, res, next)=>{
+    
+    const logradouro = req.body.logradouro;
+    const numero = req.body.numero;
+    const cidade = req.body.cidade;
+
+    deliveryModel.getDeliveryByAddress(logradouro, numero, cidade, (err, delivery)=>{
+        if (err) throw err;
+
+        if (delivery){
+            const query = {_id: delivery._id}
+            deliveryModel.remove(query,()=>{
+                if (err)
+                return res.json({success: false, msg: 'Falha ao deletar. Por favor tente novamente.'})            
+            else 
+                return res.json({success: true, msg: 'Endereço deletado com sucesso'})
+            })
+        }
+    });
+});
+
+
 module.exports = router;

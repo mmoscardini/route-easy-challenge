@@ -33,7 +33,7 @@ export class FormComponent implements OnInit {
       if (this.endereco != null){
       this.requests.checkAddress(this.endereco).subscribe(data => {
         if (data){
-          console.log (data);
+          //console.log (data);
           //Confirmar se o endereco foi preenchido corretamente e retornou ao menos 6 campos
           if (data.results[0].address_components[6]){
 
@@ -106,7 +106,7 @@ export class FormComponent implements OnInit {
     this.requests.newDelivery(this.newDelivery).subscribe(data =>{
       //console.log (data);
       if(data.success){
-        this.integrationService.novoCadastro(data);
+        this.integrationService.novoCadastro(true);
         return this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout: 5000 });
       }
       else {
@@ -132,7 +132,7 @@ export class FormComponent implements OnInit {
 
   deleteDB(){
     this.requests.deleteAllDeliveries().subscribe(data =>{
-      this.integrationService.novoCadastro(data);
+      this.integrationService.novoCadastro(true);
       return this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 5000 });      
     })
   }

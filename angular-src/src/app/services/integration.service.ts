@@ -5,7 +5,7 @@ import { Subject }    from 'rxjs/Subject';
 export class IntegrationService {
 
   //Observables boolean sources
-  public novoCadastroSource = new Subject<any>();
+  public novoCadastroSource = new Subject<boolean>();
 
   //Observable streams
   novoCadastro$ = this.novoCadastroSource.asObservable();
