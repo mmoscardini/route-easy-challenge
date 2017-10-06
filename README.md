@@ -16,10 +16,10 @@ Desenvolver um aplicativo com o framework MEAN que utilize mongoose, google geoc
 * Apresentar uma tabela com nomes, pesos e locais cadastrados
 * A tabela e o mapa devem atualizar de forma assincrona conforme alterações no banco de dados.
 
-## Utilização:
 ### Versão em produção
 * https://rout-easy-challenge.herokuapp.com/
 
+## Utilização:
 ### Requisitos:
 * NodeJs
 * MongoDb
